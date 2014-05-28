@@ -3,11 +3,11 @@
 
 lval* lval_eval_sexpr(lval* v) {
     for (int i = 0; i < v->count; i++) {
-        v->cell[i] = lval_eval(v->cell[i]);
-    }
-
-    for (int i = 0; i < v->count; i++) {
-        if (v->cell[i]->type == LVAL_ERR) { return lval_take(v, i); }
+        if (v->cell[i]->type != LVAL_ERR) {
+            v->cell[i] = lval_eval(v->cell[i]);
+        } else {
+            return lval_take(v, i);
+        }
     }
 
     if (v->count == 0) {
