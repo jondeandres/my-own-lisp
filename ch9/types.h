@@ -8,7 +8,7 @@
 
 enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, LVAL_SEXPR };
 
-typedef struct {
+typedef struct lval {
     int type;
 
     long num;
@@ -21,5 +21,15 @@ typedef struct {
     struct lval** cell;
 
 } lval;
+
+lval* lval_num(long);
+lval* lval_err(char*);
+lval* lval_sym(char*);
+lval* lval_sexpr(void);
+
+void lval_free(lval*);
+lval* lval_add(lval*, lval*);
+lval* lval_pop(lval*, int);
+lval* lval_take(lval*, int);
 
 #endif

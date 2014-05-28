@@ -25,4 +25,7 @@ void lval_print(lval* v) {
     }
 }
 
-void lval_println(lval* v) { lval_print(v); putchar('\n'); }
+void lval_println(lval* v) {
+    lval_print(v);
+    putchar('\n');
+}

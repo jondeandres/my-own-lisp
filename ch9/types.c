@@ -36,7 +36,7 @@ lval* lval_sexpr(void) {
 }
 
 
-void lval_del(lval *v) {
+void lval_free(lval *v) {
     int i;
 
     switch(v->type) {
@@ -45,7 +45,7 @@ void lval_del(lval *v) {
     case LVAL_SYM: free(v->sym); break;
     case LVAL_SEXPR:
         for (i = 0; i < v->count; i++) {
-            lval_del(v->cell[i]);
+            lval_free(v->cell[i]);
         }
 
         free(v->cell);
@@ -61,4 +61,23 @@ lval* lval_add(lval *v, lval*x) {
     v->cell[v->count - 1] = x;
 
     return v;
+}
+
+lval* lval_pop(lval* v, int i)
+{
+    lval* x = v->cell[i];
+
+    memmove(&v->cell[i], &v->cell[i+1], sizeof(lval*) * v->count-i-1);
+    v->count--;
+    v->cell = realloc(v->cell, sizeof(lval*) * v->count);
+
+    return x;
+}
+
+lval* lval_take(lval* v, int i)
+{
+    lval* x = lval_pop(v, i);
+    lval_free(v);
+
+    return x;
 }
