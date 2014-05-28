@@ -2,7 +2,7 @@
 
 static const char* grammar = " \
     number : /-?[0-9]+/ ;                          \
-    symbol : '+' | '-' | '*' | '/' ;               \
+    symbol : '+' | '-' | '*' | '/' | '%';          \
     sexpr  : '(' <expr>* ')' ;                     \
     expr   : <number> | <symbol> | <sexpr> ;       \
     lispy  : /^/ <expr>* /$/ ;                     \

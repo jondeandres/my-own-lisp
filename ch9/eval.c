@@ -69,6 +69,15 @@ lval* builtin_op(lval* a, char* op) {
             x->num /= y->num;
         }
 
+        if (strcmp(op, "%") == 0) {
+            if (y->num == 0) {
+                x = lval_err("Division by zero!");
+                break;
+            }
+
+            x->num %= y->num;
+        }
+
         lval_free(y);
     }
 
